@@ -1,0 +1,25 @@
+name: '每日表情包'
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  watch:
+    types: started
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 安装依赖库
+      run: |
+          sudo -H pip3 install --upgrade setuptools
+          sudo -H pip3 install -r requirements.txt
+
+    - name: 每日表情包
+      run: python3 Article_emoji.py
+      env:
+          SESSDATA: ${{ secrets.SESSDATA }}
+          BILI_JCT: ${{ secrets.BILI_JCT }}

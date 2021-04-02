@@ -1,0 +1,25 @@
+name: 4k壁纸
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  watch:
+    types: started
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 安装依赖库
+      run: |
+          sudo -H pip3 install --upgrade setuptools
+          sudo -H pip3 install -r requirements.txt
+
+    - name: 4k壁纸
+      run: python3 Article_wallpaper.py
+      env:
+          SESSDATA: ${{ secrets.SESSDATA }}
+          BILI_JCT: ${{ secrets.BILI_JCT }}
